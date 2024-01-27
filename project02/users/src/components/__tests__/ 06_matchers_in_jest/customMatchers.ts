@@ -1,15 +1,6 @@
 import '@testing-library/jest-dom'
 import { within } from '@testing-library/react' // Importando para garantir que os matchers personalizados estejam disponíveis
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace jest {
-    interface Matchers<R> {
-      toContainRole(role: string, quantity?: number): R
-    }
-  }
-}
-
 interface ToContainRoleOptions {
   quantity?: number
   container: HTMLElement
@@ -21,20 +12,26 @@ interface ToContainRoleResult {
   message?: () => string
 }
 
-const toContainRole = (options: ToContainRoleOptions): ToContainRoleResult => {
-  const { quantity = 1, container, role } = options
-  const elements = within(container).queryAllByRole(role) as HTMLElement[]
+expect.extend({
+  toContainRole<T>(
+    received: T,
+    role: string,
+    quantity = 1,
+  ): { pass: boolean; message: () => string } {
+    const elements = within(received as HTMLElement).queryAllByRole(
+      role,
+    ) as HTMLElement[]
 
-  if (elements.length === quantity) {
-    return {
-      pass: true,
+    if (elements.length === quantity) {
+      return {
+        pass: true,
+        message: () => `Expected ${elements.length} ${role}s, got ${quantity}`,
+      }
     }
-  }
 
-  return {
-    pass: false,
-    message: () => `Expected ${elements.length} ${role}s, got ${quantity}`,
-  }
-}
-
-expect.extend({ toContainRole })
+    return {
+      pass: false,
+      message: () => `Expected ${elements.length} ${role}s, got ${quantity}`,
+    }
+  },
+})

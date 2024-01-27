@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom'
+import './customMatchers'
 import { render, screen, within } from '@testing-library/react'
 import FormData from '../../06_matchers_in_jest/FormData.tsx'
 
