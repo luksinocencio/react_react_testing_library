@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import UserForm from './UserForm'
 import UserList from './UserList'
+import LoadableColorList from './components/04_finding_elements_with_query_functions/LoadableColorList.tsx'
 
 export type UserType = {
   name: string
@@ -19,6 +20,8 @@ function App() {
       <UserForm onUserAdd={onUserAdd} />
       <hr />
       <UserList users={users} />
+      <hr />
+      <LoadableColorList />
     </>
   )
 }
