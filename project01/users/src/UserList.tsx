@@ -1,11 +1,11 @@
 import React from 'react'
-import { UserType } from './App'
+import {UserType} from './App'
 
 type UserListType = {
   users: UserType[]
 }
 
-const UserList: React.FC<UserListType> = ({ users }) => {
+const UserList: React.FC<UserListType> = ({users}) => {
   const renderedUsers = users.map(user => {
     return (
       <tr key={user.email}>
@@ -14,15 +14,16 @@ const UserList: React.FC<UserListType> = ({ users }) => {
       </tr>
     )
   })
+
   return (
     <table>
       <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-        </tr>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
       </thead>
-      <tbody>{renderedUsers}</tbody>
+      <tbody data-testid="users">{renderedUsers}</tbody>
     </table>
   )
 }
