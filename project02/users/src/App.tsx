@@ -8,6 +8,7 @@ export type UserType = {
   email: string
 }
 
+// guard clause
 function App() {
   const [users, setUsers] = useState<UserType[]>([])
 
